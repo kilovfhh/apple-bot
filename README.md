@@ -1,106 +1,131 @@
-# AppleBot
+<div align="center">
 
-AppleBot is a small, open-source Discord bot created by Nexa (itzoxy). It provides utility, fun, moderation, and music features and is designed to be easy to read and extend.
+# 🍎 AppleBot
 
-**Status**: Open-source — updates will be pushed to GitHub by the author.
+A lightweight open-source Discord bot built by **Nexa (itzoxy)** featuring moderation, entertainment, utility, and music commands.
 
----------
+[![Python](https://img.shields.io/badge/Python-3.10+-blue?style=for-the-badge)](https://www.python.org/downloads/)
+[![Static Badge](https://img.shields.io/badge/GitHub-repo-blue%3Flogo%3Dgithub?logo=github)](https://github.com/Kilovfhh/Apple-Bot)
 
-**Quick overview**
-- Prefix commands: `!` (e.g. `!help`, `!status`, `!joke`).
-- Slash command: `/pmusic` (plays audio via yt-dlp + FFmpeg).
-- Loads cogs from the `commands/` and `adminCommands/` folders automatically on startup.
 
----------
+### Easy • Open Source • Extensible
 
-Contents and features
-- Help / GUI: `!help`, `!gui` — interactive embeds and buttons with command info.
-- Status: `!status` — shows bot ping and uptime (interactive buttons).
-- Fun: `!joke`, `!gmeme` — random joke and Giphy-based meme (`!gmeme`).
-- User info: `!id`, `!name` — return user ID and username.
-- Developer: `!purge` — developer-only message purge.
-- Admin: `!hadmin`, `!ban`, `!kick`, `!mute`, `!unmute`, `!timeout` — admin moderation utilities.
-- Music: `/pmusic` — play a song in voice channels (uses `yt-dlp` and FFmpeg binary).
+</div>
 
-Full command list (extracted from source)
-- `!help` — Show help embed and interactive buttons.
-- `!gui` — Show an interactive GUI embed with buttons.
-- `!status` — Open the status checker (ping, server count, uptime).
-- `!joke` — Sends a joke.
-- `!gmeme` — Fetches a random meme from Giphy.
-- `!id` — Shows your Discord user ID.
-- `!name` — Shows your username.
-- `!secret` — Developer/Admin only; sends a secret message.
-- `!hadmin` — Admin help GUI for admin commands.
-- `!ban @user [reason]` — Ban a user (developer role required in code).
-- `!kick @user [reason]` — Kick a user (developer role required in code).
-- `!mute @user [minutes] [reason]` — Mute via timeout.
-- `!unmute @user` — Remove timeout.
-- `!timeout @user [minutes] [reason]` — Timeout a user.
-- `!purge [amount]` — Developer-only: bulk-delete messages (default 5).
-- `/pmusic song_query:` — Slash command to play a song in voice channels.
+---
 
----------
+## ✨ Features
 
-Requirements
-- Python 3.10+ recommended.
-- See `requirements.txt` for Python package dependencies. You'll also need the FFmpeg executable available for the music cog.
+### 🎮 Fun Commands
 
-Suggested `requirements.txt` content (included in repo):
-- discord.py>=2.0.0
-- requests
-- yt-dlp
+* `!joke` — Random joke
+* `!gmeme` — Random Giphy meme
 
----------
+### 🛠 Utility Commands
 
-Configuration
-1. Edit `config.py` and replace the placeholder values with your own keys and IDs:
-   - `BOT_TOKEN` — Your Discord bot token (DO NOT share publicly).
-   - `GIPHY_API_KEY` — (optional) Giphy API key used by `!gmeme`.
-   - `DEVELOPER_ROLE_ID`, `ADMIN_ROLE_ID`, `MEMBERS_ROLE_ID` — role IDs used for permission checks.
+* `!help` — Interactive help menu
+* `!gui` — Interactive command GUI
+* `!status` — Bot status, ping, and uptime
+* `!id` — Display your Discord ID
+* `!name` — Display your username
 
-2. FFmpeg: the music cog expects the FFmpeg executable at `bin/ffmpeg/ffmpeg.exe` on Windows. You can either:
-   - Place `ffmpeg.exe` at `bin/ffmpeg/ffmpeg.exe` inside the repo (as the code currently references it), or
-   - Change the path in `commands/music.py` to point to your system FFmpeg (recommended).
+### 🔨 Moderation Commands
 
-Security note: Never commit `config.py` with real tokens into a public repository. This repository now includes a `config.example.py` and a `.gitignore` entry for `config.py` to help prevent accidental leaks. Before publishing to GitHub either:
-- replace secrets in your local `config.py` with environment-backed loading, or
-- keep `config.py` local (ignored) and use `config.example.py` in the repo as a template.
+* `!ban`
+* `!kick`
+* `!mute`
+* `!unmute`
+* `!timeout`
+* `!purge`
 
----------
+### 🎵 Music
 
-Installation & run (quick)
-1. Create and activate a virtual environment:
+* `/pmusic` — Play audio from YouTube using yt-dlp and FFmpeg
 
-```powershell
+---
+
+## 📋 Command List
+
+| Command    | Description          |
+| ---------- | -------------------- |
+| `!help`    | Show help menu       |
+| `!gui`     | Interactive GUI      |
+| `!status`  | Check bot status     |
+| `!joke`    | Random joke          |
+| `!gmeme`   | Random meme          |
+| `!id`      | Show user ID         |
+| `!name`    | Show username        |
+| `!ban`     | Ban a user           |
+| `!kick`    | Kick a user          |
+| `!mute`    | Timeout a user       |
+| `!unmute`  | Remove timeout       |
+| `!timeout` | Timeout a user       |
+| `!purge`   | Bulk delete messages |
+| `/pmusic`  | Play music           |
+
+---
+
+## 🚀 Installation
+
+```bash
+git clone https://github.com/Kilovfhh/AppleBot.git
+cd AppleBot
+
 python -m venv .venv
-.\.venv\Scripts\Activate.ps1   # PowerShell
-```
 
-2. Install requirements:
-
-```powershell
 pip install -r requirements.txt
 ```
 
-3. Edit `config.py` and set `BOT_TOKEN` and any API keys/role IDs needed.
+Configure `config.py`, add FFmpeg, then run:
 
-4. Ensure FFmpeg is placed at `bin/ffmpeg/ffmpeg.exe` (or update `commands/music.py`).
-
-5. Run the bot:
-
-```powershell
+```bash
 python bot.py
 ```
 
-If the bot fails to start, check `bot.log` and the console output for errors.
+---
 
----------
+## ⚙ Configuration
 
+<<<<<<< HEAD
+Required values in `config.py`:
+
+```python
+BOT_TOKEN = "YOUR_TOKEN"
+GIPHY_API_KEY = "YOUR_GIPHY_KEY"
+
+DEVELOPER_ROLE_ID = 0
+ADMIN_ROLE_ID = 0
+MEMBERS_ROLE_ID = 0
+```
+
+---
+=======
 Notes for contributors
 - Please keep commits small and focused; update this README when adding commands or changing behavior.
 - The bot loads cogs from `commands/` and `adminCommands/` automatically, so new cogs should follow the same pattern and expose an `async def setup(bot)` function.
 ---------
+>>>>>>> d4b5b0f (Updated a couple files, and fix a couple commands)
 
-Contact & attribution
-- Created by Nexa (itzoxy). GitHub: https://github.com/Kilovfhh
+## 🔒 Security
+
+Never upload your bot token to GitHub.
+
+Use:
+
+* `config.example.py`
+* `.gitignore`
+* Environment variables (recommended)
+
+---
+
+## 🤝 Contributing
+
+Pull requests and suggestions are welcome.
+
+---
+
+## 👤 Author
+
+**Nexa (itzoxy)**
+
+GitHub: https://github.com/Kilovfhh
