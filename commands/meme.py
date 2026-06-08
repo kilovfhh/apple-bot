@@ -22,7 +22,7 @@ class rmeme(commands.Cog):
                 "HAHAHA LOOK!",
                 "I hope this meme makes you laugh!"
             ]
-            embed = discord.Embed(title='🍎AppleBot Meme Center🍎',
+            embed = discord.Embed(title='Random Meme',
                                   description=random.choice(phrases),
                                   color=discord.Color.red())
             embed.set_image(url=response.json()['data']['images']['original']['url'])

@@ -10,6 +10,10 @@ from config import ADMIN_ROLE_ID, DEVELOPER_ROLE_ID
 import logging
 import datetime
 
+# Logging channel
+LOG_CHANNEL_ID = 1512872152825598204
+
+
 class AdminCommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -21,7 +25,7 @@ class AdminCommands(commands.Cog):
             return
         else:
             embed = discord.Embed(
-                title='# Welcome to ApppleBot Admin Commands 👨‍💻',
+                title='# Welcome to AppleBot Admin Commands 👨‍💻',
                 description='Here you can find all the admin commands for AppleBot! \n'
                             "-------------------------------------------------------------\n"
                             "Please Click the button(s) below to see what type of commands you have! \n"
@@ -100,7 +104,35 @@ class AdminCommands(commands.Cog):
         else:
             try:
                 await member.ban(reason=reason)
-                await ctx.send(f"{member} has been banned from the server! Reason: {reason}")
+                await ctx.send(f"{member} has been banned from the server!")
+                await ctx.send(f"Reason: {reason}")
+
+                # Logging ban to a discord channel 
+                log_channel = self.bot.get_channel(LOG_CHANNEL_ID)
+                if log_channel:
+                    embed = discord.Embed(
+                        title = 'User Banned!',
+                        color = discord.Color.teal(),
+                        timestamp = ctx.message.created_at
+                    )
+
+                    embed.add_field(
+                        name = 'Banned User',
+                        value = f'{member} (ID: {member.id})',
+                        inline = False
+                    )
+                    embed.add_field(
+                        name = 'Banned By',
+                        value = f'{ctx.author} (ID: {ctx.author.id})',
+                        inline = False
+                    )
+                    embed.add_field(
+                        name = 'Reason',
+                        value = reason,
+                        inline = False                
+                    )
+                    await log_channel.send(embed=embed)
+
                 logging.info(f"{ctx.author} (ID: {ctx.author.id}) banned {member} (ID: {member.id}) from the server. Reason: {reason}")
                 print(f"{ctx.author} (ID: {ctx.author.id}) banned {member} (ID: {member.id}) from the server. Reason: {reason}")
             except discord.Forbidden:
@@ -222,6 +254,11 @@ class AdminCommands(commands.Cog):
                 await ctx.send('So like.. He got more aura then me and I cannot time him out...')
             except Exception as e:
                 await ctx.send(f"An error occurred: {e}")
+    @commands.command(name='guserid')
+    async def get_user_id(self, ctx, member: discord.Member):
+        await ctx.send(f"The user ID for {member.mention} is {member.id}")
+        print(f"User: {ctx.author}, Ran command: !guserid at {datetime.datetime.now()}, and grabbed UserID for: {member.name} ID: {member.id}")
+        logging.info(f'User: {ctx.author}, ID: {ctx.author.id} grabbed UserID for: {member.name} ID: {member.id}')
 
 # Setup
 async def setup(bot):

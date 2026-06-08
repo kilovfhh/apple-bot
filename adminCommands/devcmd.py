@@ -7,6 +7,7 @@ import discord
 from discord.ext import commands
 import logging
 from config import DEVELOPER_ROLE_ID, Nexa_Discord_id
+from .admin import LOG_CHANNEL_ID
 
 
 class Developer_commands(commands.Cog):
@@ -16,21 +17,28 @@ class Developer_commands(commands.Cog):
 
     @commands.command(name='purge')
     async def devCMD(self, ctx, amount: int = 5):
-        channel_id = ctx.channel.id
-        if Nexa_Discord_id == ctx.author:
-            print(f"{ctx.author}, Just ran !purge")
-            logging.info(f"{ctx.author}, Just ran !purge")
+        if ctx.author.id != Nexa_Discord_id:
+            await ctx.send("Sorry, you don't have permission to use this command.")
+            return
+        elif ctx.author.id == Nexa_Discord_id:
+            await ctx.channel.purge(limit=amount)
+            await ctx.send(f"Purged {amount} Messages!")
+            logging.info(f"{ctx.author} used the purge command to delete {amount} messages in {ctx.channel}.")
 
-            deleted = await ctx.channel.purge(limit = amount + 1)
-            success_msg = await ctx.send(f"Just deleted {len(deleted) - 1} Message(s)")
-            logging.info(f"{ctx.author}, Just deleted {len(deleted) - 1} Message(s) From channel  {channel_id}")
-            print(f"User: {ctx.author}, Just deleted {len(deleted) - 1} Message(s) From channel: {channel_id}")
+            #logging purge 
+            log_channel = self.bot.get_channel(LOG_CHANNEL_ID)
+            if log_channel:
+                embed = discord.Embed(
+                    title="Purge Command Used",
+                    description=f"{ctx.author} used the purge command to delete {amount} messages in {ctx.channel}.",
+                    color=discord.Color.red(),
+                    timestamp=ctx.message.created_at
+                )
+                await log_channel.send(embed=embed)
 
-
-            # Time till message disappers
-            await success_msg.delete(delay = 5)
         else:
-            await ctx.send('An error occurred.')
+            print(f"{ctx.author} Tried to run !purge but wasn't able to!")
+            await ctx.send("Sorry, you either aren't the developer or an error occurred")
 
 
 # Bot setup
