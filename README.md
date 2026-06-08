@@ -100,13 +100,6 @@ If the bot fails to start, check `bot.log` and the console output for errors.
 Notes for contributors
 - Please keep commits small and focused; update this README when adding commands or changing behavior.
 - The bot loads cogs from `commands/` and `adminCommands/` automatically, so new cogs should follow the same pattern and expose an `async def setup(bot)` function.
-- This project intentionally leaves code unmodified by AI — the author prefers to learn by reading and editing the source directly.
-
----------
-
-License
-- You can add a license file (e.g., MIT) before publishing. If you want, I can add an `LICENSE` file for you.
-
 ---------
 
 Contact & attribution

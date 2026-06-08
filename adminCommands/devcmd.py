@@ -6,7 +6,7 @@ Made by:Nexa
 import discord
 from discord.ext import commands
 import logging
-from config import DEVELOPER_ROLE_ID
+from config import DEVELOPER_ROLE_ID, Nexa_Discord_id
 
 
 class Developer_commands(commands.Cog):
@@ -17,7 +17,7 @@ class Developer_commands(commands.Cog):
     @commands.command(name='purge')
     async def devCMD(self, ctx, amount: int = 5):
         channel_id = ctx.channel.id
-        if DEVELOPER_ROLE_ID in {role.id for role in ctx.author.roles}:
+        if Nexa_Discord_id == ctx.author:
             print(f"{ctx.author}, Just ran !purge")
             logging.info(f"{ctx.author}, Just ran !purge")
 
